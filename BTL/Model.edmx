@@ -1,0 +1,420 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QLTHUCHIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HOCSINH">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tenhs" Type="nvarchar" MaxLength="50" />
+          <Property Name="diachi" Type="nvarchar" MaxLength="50" />
+          <Property Name="malop" Type="int" />
+        </EntityType>
+        <EntityType Name="KHOANCHI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sotien" Type="money" />
+          <Property Name="ngay" Type="date" />
+          <Property Name="chitiet" Type="nvarchar" MaxLength="500" />
+          <Property Name="loaikhoanchi" Type="int" Nullable="false" />
+          <Property Name="nguoithem" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="KHOANTHU">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sotien" Type="money" />
+          <Property Name="ngay" Type="datetime" />
+          <Property Name="chitiet" Type="nvarchar" MaxLength="500" />
+          <Property Name="loaikhoanthu" Type="int" Nullable="false" />
+          <Property Name="mahocsinh" Type="int" />
+          <Property Name="nguoithem" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LOAIKHOANCHI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tenkhoanchi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LOAIKHOANTHU">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tenkhoanthu" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LOP">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tenlop" Type="nvarchar" MaxLength="50" />
+          <Property Name="namhoc" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_HOCSINH_LOP">
+          <End Role="LOP" Type="Self.LOP" Multiplicity="0..1" />
+          <End Role="HOCSINH" Type="Self.HOCSINH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOP">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HOCSINH">
+              <PropertyRef Name="malop" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KHOANCHI_LOAIKC">
+          <End Role="LOAIKHOANCHI" Type="Self.LOAIKHOANCHI" Multiplicity="1" />
+          <End Role="KHOANCHI" Type="Self.KHOANCHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAIKHOANCHI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="KHOANCHI">
+              <PropertyRef Name="loaikhoanchi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KHOANCHI_TK">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="0..1" />
+          <End Role="KHOANCHI" Type="Self.KHOANCHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="username" />
+            </Principal>
+            <Dependent Role="KHOANCHI">
+              <PropertyRef Name="nguoithem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_THU_ACC">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="1" />
+          <End Role="KHOANTHU" Type="Self.KHOANTHU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="username" />
+            </Principal>
+            <Dependent Role="KHOANTHU">
+              <PropertyRef Name="nguoithem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_THU_LOAI">
+          <End Role="LOAIKHOANTHU" Type="Self.LOAIKHOANTHU" Multiplicity="1" />
+          <End Role="KHOANTHU" Type="Self.KHOANTHU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAIKHOANTHU">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="KHOANTHU">
+              <PropertyRef Name="loaikhoanthu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLTHUCHIModelStoreContainer">
+          <EntitySet Name="HOCSINH" EntityType="Self.HOCSINH" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KHOANCHI" EntityType="Self.KHOANCHI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KHOANTHU" EntityType="Self.KHOANTHU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOAIKHOANCHI" EntityType="Self.LOAIKHOANCHI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOAIKHOANTHU" EntityType="Self.LOAIKHOANTHU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOP" EntityType="Self.LOP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAIKHOAN" EntityType="Self.TAIKHOAN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_HOCSINH_LOP" Association="Self.FK_HOCSINH_LOP">
+            <End Role="LOP" EntitySet="LOP" />
+            <End Role="HOCSINH" EntitySet="HOCSINH" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KHOANCHI_LOAIKC" Association="Self.FK_KHOANCHI_LOAIKC">
+            <End Role="LOAIKHOANCHI" EntitySet="LOAIKHOANCHI" />
+            <End Role="KHOANCHI" EntitySet="KHOANCHI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KHOANCHI_TK" Association="Self.FK_KHOANCHI_TK">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+            <End Role="KHOANCHI" EntitySet="KHOANCHI" />
+          </AssociationSet>
+          <AssociationSet Name="FK_THU_ACC" Association="Self.FK_THU_ACC">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+            <End Role="KHOANTHU" EntitySet="KHOANTHU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_THU_LOAI" Association="Self.FK_THU_LOAI">
+            <End Role="LOAIKHOANTHU" EntitySet="LOAIKHOANTHU" />
+            <End Role="KHOANTHU" EntitySet="KHOANTHU" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QLTHUCHIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="HOCSINH">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tenhs" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="diachi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="malop" Type="Int32" />
+          <NavigationProperty Name="LOP" Relationship="Self.FK_HOCSINH_LOP" FromRole="HOCSINH" ToRole="LOP" />
+        </EntityType>
+        <EntityType Name="KHOANCHI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sotien" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ngay" Type="DateTime" Precision="0" />
+          <Property Name="chitiet" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="loaikhoanchi" Type="Int32" Nullable="false" />
+          <Property Name="nguoithem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LOAIKHOANCHI1" Relationship="Self.FK_KHOANCHI_LOAIKC" FromRole="KHOANCHI" ToRole="LOAIKHOANCHI" />
+          <NavigationProperty Name="TAIKHOAN" Relationship="Self.FK_KHOANCHI_TK" FromRole="KHOANCHI" ToRole="TAIKHOAN" />
+        </EntityType>
+        <EntityType Name="KHOANTHU">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sotien" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ngay" Type="DateTime" Precision="3" />
+          <Property Name="chitiet" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="loaikhoanthu" Type="Int32" Nullable="false" />
+          <Property Name="mahocsinh" Type="Int32" />
+          <Property Name="nguoithem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TAIKHOAN" Relationship="Self.FK_THU_ACC" FromRole="KHOANTHU" ToRole="TAIKHOAN" />
+          <NavigationProperty Name="LOAIKHOANTHU1" Relationship="Self.FK_THU_LOAI" FromRole="KHOANTHU" ToRole="LOAIKHOANTHU" />
+        </EntityType>
+        <EntityType Name="LOAIKHOANCHI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tenkhoanchi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KHOANCHIs" Relationship="Self.FK_KHOANCHI_LOAIKC" FromRole="LOAIKHOANCHI" ToRole="KHOANCHI" />
+        </EntityType>
+        <EntityType Name="LOAIKHOANTHU">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tenkhoanthu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KHOANTHUs" Relationship="Self.FK_THU_LOAI" FromRole="LOAIKHOANTHU" ToRole="KHOANTHU" />
+        </EntityType>
+        <EntityType Name="LOP">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tenlop" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="namhoc" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HOCSINHs" Relationship="Self.FK_HOCSINH_LOP" FromRole="LOP" ToRole="HOCSINH" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="username" />
+          </Key>
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="KHOANCHIs" Relationship="Self.FK_KHOANCHI_TK" FromRole="TAIKHOAN" ToRole="KHOANCHI" />
+          <NavigationProperty Name="KHOANTHUs" Relationship="Self.FK_THU_ACC" FromRole="TAIKHOAN" ToRole="KHOANTHU" />
+        </EntityType>
+        <Association Name="FK_HOCSINH_LOP">
+          <End Role="LOP" Type="Self.LOP" Multiplicity="0..1" />
+          <End Role="HOCSINH" Type="Self.HOCSINH" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOP">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="HOCSINH">
+              <PropertyRef Name="malop" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KHOANCHI_LOAIKC">
+          <End Role="LOAIKHOANCHI" Type="Self.LOAIKHOANCHI" Multiplicity="1" />
+          <End Role="KHOANCHI" Type="Self.KHOANCHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAIKHOANCHI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="KHOANCHI">
+              <PropertyRef Name="loaikhoanchi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KHOANCHI_TK">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="0..1" />
+          <End Role="KHOANCHI" Type="Self.KHOANCHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="username" />
+            </Principal>
+            <Dependent Role="KHOANCHI">
+              <PropertyRef Name="nguoithem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_THU_ACC">
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="1" />
+          <End Role="KHOANTHU" Type="Self.KHOANTHU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TAIKHOAN">
+              <PropertyRef Name="username" />
+            </Principal>
+            <Dependent Role="KHOANTHU">
+              <PropertyRef Name="nguoithem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_THU_LOAI">
+          <End Role="LOAIKHOANTHU" Type="Self.LOAIKHOANTHU" Multiplicity="1" />
+          <End Role="KHOANTHU" Type="Self.KHOANTHU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOAIKHOANTHU">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="KHOANTHU">
+              <PropertyRef Name="loaikhoanthu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLTHUCHIEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="HOCSINHs" EntityType="Self.HOCSINH" />
+          <EntitySet Name="KHOANCHIs" EntityType="Self.KHOANCHI" />
+          <EntitySet Name="KHOANTHUs" EntityType="Self.KHOANTHU" />
+          <EntitySet Name="LOAIKHOANCHIs" EntityType="Self.LOAIKHOANCHI" />
+          <EntitySet Name="LOAIKHOANTHUs" EntityType="Self.LOAIKHOANTHU" />
+          <EntitySet Name="LOPs" EntityType="Self.LOP" />
+          <EntitySet Name="TAIKHOANs" EntityType="Self.TAIKHOAN" />
+          <AssociationSet Name="FK_HOCSINH_LOP" Association="Self.FK_HOCSINH_LOP">
+            <End Role="LOP" EntitySet="LOPs" />
+            <End Role="HOCSINH" EntitySet="HOCSINHs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KHOANCHI_LOAIKC" Association="Self.FK_KHOANCHI_LOAIKC">
+            <End Role="LOAIKHOANCHI" EntitySet="LOAIKHOANCHIs" />
+            <End Role="KHOANCHI" EntitySet="KHOANCHIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KHOANCHI_TK" Association="Self.FK_KHOANCHI_TK">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+            <End Role="KHOANCHI" EntitySet="KHOANCHIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_THU_ACC" Association="Self.FK_THU_ACC">
+            <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+            <End Role="KHOANTHU" EntitySet="KHOANTHUs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_THU_LOAI" Association="Self.FK_THU_LOAI">
+            <End Role="LOAIKHOANTHU" EntitySet="LOAIKHOANTHUs" />
+            <End Role="KHOANTHU" EntitySet="KHOANTHUs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QLTHUCHIModelStoreContainer" CdmEntityContainer="QLTHUCHIEntities">
+          <EntitySetMapping Name="HOCSINHs">
+            <EntityTypeMapping TypeName="QLTHUCHIModel.HOCSINH">
+              <MappingFragment StoreEntitySet="HOCSINH">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tenhs" ColumnName="tenhs" />
+                <ScalarProperty Name="diachi" ColumnName="diachi" />
+                <ScalarProperty Name="malop" ColumnName="malop" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KHOANCHIs">
+            <EntityTypeMapping TypeName="QLTHUCHIModel.KHOANCHI">
+              <MappingFragment StoreEntitySet="KHOANCHI">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sotien" ColumnName="sotien" />
+                <ScalarProperty Name="ngay" ColumnName="ngay" />
+                <ScalarProperty Name="chitiet" ColumnName="chitiet" />
+                <ScalarProperty Name="loaikhoanchi" ColumnName="loaikhoanchi" />
+                <ScalarProperty Name="nguoithem" ColumnName="nguoithem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KHOANTHUs">
+            <EntityTypeMapping TypeName="QLTHUCHIModel.KHOANTHU">
+              <MappingFragment StoreEntitySet="KHOANTHU">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sotien" ColumnName="sotien" />
+                <ScalarProperty Name="ngay" ColumnName="ngay" />
+                <ScalarProperty Name="chitiet" ColumnName="chitiet" />
+                <ScalarProperty Name="loaikhoanthu" ColumnName="loaikhoanthu" />
+                <ScalarProperty Name="mahocsinh" ColumnName="mahocsinh" />
+                <ScalarProperty Name="nguoithem" ColumnName="nguoithem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOAIKHOANCHIs">
+            <EntityTypeMapping TypeName="QLTHUCHIModel.LOAIKHOANCHI">
+              <MappingFragment StoreEntitySet="LOAIKHOANCHI">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="tenkhoanchi" ColumnName="tenkhoanchi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOAIKHOANTHUs">
+            <EntityTypeMapping TypeName="QLTHUCHIModel.LOAIKHOANTHU">
+              <MappingFragment StoreEntitySet="LOAIKHOANTHU">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tenkhoanthu" ColumnName="tenkhoanthu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOPs">
+            <EntityTypeMapping TypeName="QLTHUCHIModel.LOP">
+              <MappingFragment StoreEntitySet="LOP">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tenlop" ColumnName="tenlop" />
+                <ScalarProperty Name="namhoc" ColumnName="namhoc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAIKHOANs">
+            <EntityTypeMapping TypeName="QLTHUCHIModel.TAIKHOAN">
+              <MappingFragment StoreEntitySet="TAIKHOAN">
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
