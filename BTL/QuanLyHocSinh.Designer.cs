@@ -35,12 +35,14 @@
             this.txtTenHS = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.grdLop = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.chon = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtDiaChi = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.chon = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tien = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdLop)).BeginInit();
             this.SuspendLayout();
             // 
@@ -106,41 +108,15 @@
             this.grdLop.AllowUserToResizeRows = false;
             this.grdLop.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdLop.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.chon,
             this.Column1,
             this.Column2,
-            this.chon,
+            this.tien,
             this.id});
-            this.grdLop.Location = new System.Drawing.Point(249, 87);
+            this.grdLop.Location = new System.Drawing.Point(221, 74);
             this.grdLop.Name = "grdLop";
-            this.grdLop.Size = new System.Drawing.Size(348, 216);
+            this.grdLop.Size = new System.Drawing.Size(445, 256);
             this.grdLop.TabIndex = 17;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Tên HS";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 150;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Địa chỉ";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // chon
-            // 
-            this.chon.HeaderText = "Chọn";
-            this.chon.Name = "chon";
-            this.chon.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.chon.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.chon.Width = 50;
-            // 
-            // id
-            // 
-            this.id.HeaderText = "Column3";
-            this.id.Name = "id";
-            this.id.Visible = false;
             // 
             // txtDiaChi
             // 
@@ -163,11 +139,55 @@
             this.label3.TabIndex = 24;
             this.label3.Text = "Địa chỉ";
             // 
+            // chon
+            // 
+            this.chon.HeaderText = "Chọn";
+            this.chon.Name = "chon";
+            this.chon.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.chon.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.chon.Width = 50;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Tên HS";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 150;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Địa chỉ";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // tien
+            // 
+            this.tien.HeaderText = "Đã đóng";
+            this.tien.Name = "tien";
+            this.tien.ReadOnly = true;
+            // 
+            // id
+            // 
+            this.id.HeaderText = "Column3";
+            this.id.Name = "id";
+            this.id.Visible = false;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(94, 242);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(83, 23);
+            this.button3.TabIndex = 26;
+            this.button3.Text = "Học phí";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
+            // 
             // QuanLyHocSinh
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(637, 405);
+            this.ClientSize = new System.Drawing.Size(699, 405);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.txtDiaChi);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.button2);
@@ -196,9 +216,11 @@
         private System.Windows.Forms.DataGridView grdLop;
         private System.Windows.Forms.TextBox txtDiaChi;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn chon;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn chon;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tien;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.Button button3;
     }
 }

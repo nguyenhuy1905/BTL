@@ -14,11 +14,19 @@ namespace BTL
     
     public partial class HOCSINH
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public HOCSINH()
+        {
+            this.KHOANTHUs = new HashSet<KHOANTHU>();
+        }
+    
         public int id { get; set; }
         public string tenhs { get; set; }
         public string diachi { get; set; }
         public Nullable<int> malop { get; set; }
     
         public virtual LOP LOP { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<KHOANTHU> KHOANTHUs { get; set; }
     }
 }

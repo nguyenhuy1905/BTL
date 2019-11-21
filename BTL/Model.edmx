@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QLTHUCHIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QLTHUCHIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="HOCSINH">
           <Key>
             <PropertyRef Name="id" />
@@ -59,6 +59,16 @@
           <Property Name="tenlop" Type="nvarchar" MaxLength="50" />
           <Property Name="namhoc" Type="varchar" MaxLength="15" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="TAIKHOAN">
           <Key>
             <PropertyRef Name="username" />
@@ -102,6 +112,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_KHOANTHU_HOCSINH">
+          <End Role="HOCSINH" Type="Self.HOCSINH" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="KHOANTHU" Type="Self.KHOANTHU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCSINH">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="KHOANTHU">
+              <PropertyRef Name="mahocsinh" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_THU_ACC">
           <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="1" />
           <End Role="KHOANTHU" Type="Self.KHOANTHU" Multiplicity="*" />
@@ -133,6 +157,7 @@
           <EntitySet Name="LOAIKHOANCHI" EntityType="Self.LOAIKHOANCHI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOAIKHOANTHU" EntityType="Self.LOAIKHOANTHU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOP" EntityType="Self.LOP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TAIKHOAN" EntityType="Self.TAIKHOAN" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_HOCSINH_LOP" Association="Self.FK_HOCSINH_LOP">
             <End Role="LOP" EntitySet="LOP" />
@@ -146,6 +171,10 @@
             <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
             <End Role="KHOANCHI" EntitySet="KHOANCHI" />
           </AssociationSet>
+          <AssociationSet Name="FK_KHOANTHU_HOCSINH" Association="Self.FK_KHOANTHU_HOCSINH">
+            <End Role="HOCSINH" EntitySet="HOCSINH" />
+            <End Role="KHOANTHU" EntitySet="KHOANTHU" />
+          </AssociationSet>
           <AssociationSet Name="FK_THU_ACC" Association="Self.FK_THU_ACC">
             <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
             <End Role="KHOANTHU" EntitySet="KHOANTHU" />
@@ -155,8 +184,7 @@
             <End Role="KHOANTHU" EntitySet="KHOANTHU" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QLTHUCHIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -169,6 +197,7 @@
           <Property Name="diachi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="malop" Type="Int32" />
           <NavigationProperty Name="LOP" Relationship="Self.FK_HOCSINH_LOP" FromRole="HOCSINH" ToRole="LOP" />
+          <NavigationProperty Name="KHOANTHUs" Relationship="Self.FK_KHOANTHU_HOCSINH" FromRole="HOCSINH" ToRole="KHOANTHU" />
         </EntityType>
         <EntityType Name="KHOANCHI">
           <Key>
@@ -188,12 +217,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="sotien" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="sotien" Type="Decimal" Precision="19" Scale="4" DefaultValue="0" />
           <Property Name="ngay" Type="DateTime" Precision="3" />
           <Property Name="chitiet" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="loaikhoanthu" Type="Int32" Nullable="false" />
           <Property Name="mahocsinh" Type="Int32" />
           <Property Name="nguoithem" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="HOCSINH" Relationship="Self.FK_KHOANTHU_HOCSINH" FromRole="KHOANTHU" ToRole="HOCSINH" />
           <NavigationProperty Name="TAIKHOAN" Relationship="Self.FK_THU_ACC" FromRole="KHOANTHU" ToRole="TAIKHOAN" />
           <NavigationProperty Name="LOAIKHOANTHU1" Relationship="Self.FK_THU_LOAI" FromRole="KHOANTHU" ToRole="LOAIKHOANTHU" />
         </EntityType>
@@ -222,6 +252,16 @@
           <Property Name="namhoc" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="HOCSINHs" Relationship="Self.FK_HOCSINH_LOP" FromRole="LOP" ToRole="HOCSINH" />
         </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="TAIKHOAN">
           <Key>
             <PropertyRef Name="username" />
@@ -240,6 +280,20 @@
             </Principal>
             <Dependent Role="HOCSINH">
               <PropertyRef Name="malop" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KHOANTHU_HOCSINH">
+          <End Role="HOCSINH" Type="Self.HOCSINH" Multiplicity="0..1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="KHOANTHU" Type="Self.KHOANTHU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCSINH">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="KHOANTHU">
+              <PropertyRef Name="mahocsinh" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -291,17 +345,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="QLTHUCHIEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="HOCSINHs" EntityType="Self.HOCSINH" />
           <EntitySet Name="KHOANCHIs" EntityType="Self.KHOANCHI" />
           <EntitySet Name="KHOANTHUs" EntityType="Self.KHOANTHU" />
           <EntitySet Name="LOAIKHOANCHIs" EntityType="Self.LOAIKHOANCHI" />
           <EntitySet Name="LOAIKHOANTHUs" EntityType="Self.LOAIKHOANTHU" />
           <EntitySet Name="LOPs" EntityType="Self.LOP" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TAIKHOANs" EntityType="Self.TAIKHOAN" />
           <AssociationSet Name="FK_HOCSINH_LOP" Association="Self.FK_HOCSINH_LOP">
             <End Role="LOP" EntitySet="LOPs" />
             <End Role="HOCSINH" EntitySet="HOCSINHs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KHOANTHU_HOCSINH" Association="Self.FK_KHOANTHU_HOCSINH">
+            <End Role="HOCSINH" EntitySet="HOCSINHs" />
+            <End Role="KHOANTHU" EntitySet="KHOANTHUs" />
           </AssociationSet>
           <AssociationSet Name="FK_KHOANCHI_LOAIKC" Association="Self.FK_KHOANCHI_LOAIKC">
             <End Role="LOAIKHOANCHI" EntitySet="LOAIKHOANCHIs" />
@@ -325,7 +384,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QLTHUCHIModelStoreContainer" CdmEntityContainer="QLTHUCHIEntities">
+        <EntityContainerMapping StorageEntityContainer="QLTHUCHIModelStoreContainer" CdmEntityContainer="Entities">
           <EntitySetMapping Name="HOCSINHs">
             <EntityTypeMapping TypeName="QLTHUCHIModel.HOCSINH">
               <MappingFragment StoreEntitySet="HOCSINH">
@@ -383,6 +442,17 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="tenlop" ColumnName="tenlop" />
                 <ScalarProperty Name="namhoc" ColumnName="namhoc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QLTHUCHIModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
