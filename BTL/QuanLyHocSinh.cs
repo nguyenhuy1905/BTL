@@ -28,6 +28,7 @@ namespace BTL
                     });
                 });
             }
+            
         }
 
         void LoadHS()
@@ -38,7 +39,8 @@ namespace BTL
                 grdLop.Rows.Clear();
                 var dshs = db.LOPs.Find(idLop).HOCSINHs.ToList();
                 dshs.ForEach(hs => {
-                    grdLop.Rows.Add(hs.tenhs, hs.diachi, false, hs.id);
+                    var tien = hs.KHOANTHUs.Sum(kt => kt.sotien);
+                    grdLop.Rows.Add(false, hs.tenhs, hs.diachi, tien, hs.id);
                 });
             }
             
@@ -54,13 +56,22 @@ namespace BTL
         private void Button1_Click(object sender, EventArgs e)
         {
             int idLop = (cbxLop.SelectedItem as dynamic).Value;
+            
             using (var db = new QLTHUCHIEntities())
             {
+                var tk = db.TAIKHOANs.Find(LoginInfo.UserID);
                 HOCSINH hs = new HOCSINH
                 {
                     diachi = txtDiaChi.Text,
-                    tenhs = txtTenHS.Text
+                    tenhs = txtTenHS.Text,
                 };
+                hs.KHOANTHUs.Add(new KHOANTHU { loaikhoanthu = 1, TAIKHOAN = tk, ngay= DateTime.Now });
+                hs.KHOANTHUs.Add(new KHOANTHU { loaikhoanthu = 2, TAIKHOAN = tk, ngay = DateTime.Now });
+                hs.KHOANTHUs.Add(new KHOANTHU { loaikhoanthu = 3, TAIKHOAN = tk, ngay = DateTime.Now });
+                hs.KHOANTHUs.Add(new KHOANTHU { loaikhoanthu = 4, TAIKHOAN = tk, ngay = DateTime.Now });
+                hs.KHOANTHUs.Add(new KHOANTHU { loaikhoanthu = 5, TAIKHOAN = tk, ngay = DateTime.Now });
+                hs.KHOANTHUs.Add(new KHOANTHU { loaikhoanthu = 6, TAIKHOAN = tk, ngay = DateTime.Now });
+                hs.KHOANTHUs.Add(new KHOANTHU { loaikhoanthu = 7, TAIKHOAN = tk, ngay = DateTime.Now });
                 db.LOPs.Find(idLop).HOCSINHs.Add(hs);
                 db.SaveChanges();
             }
@@ -73,9 +84,9 @@ namespace BTL
 
             for (int i = 0; i < grdLop.Rows.Count; i++)
             {
-                if (Convert.ToBoolean(grdLop.Rows[i].Cells[2].Value))
+                if (Convert.ToBoolean(grdLop.Rows[i].Cells["chon"].Value))
                 {
-                    dsid.Add(Convert.ToInt32(grdLop.Rows[i].Cells[3].Value));
+                    dsid.Add(Convert.ToInt32(grdLop.Rows[i].Cells["id"].Value));
                 }
             }
             if (dsid.Count > 0)
@@ -96,6 +107,23 @@ namespace BTL
                 db.SaveChanges();
             }
             LoadHS();
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            var index = grdLop.SelectedCells[0].RowIndex;
+            var idHs = Convert.ToInt32(grdLop.Rows[index].Cells["id"].Value??-1);
+            if (idHs != -1)
+            {
+                var frm = new ChiTietHocPhi(idHs);
+                frm.FormClosed += CbxNamHoc_SelectedIndexChanged;
+                frm.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Bạn phải chọn 1 học sinh");
+            }
+            
         }
     }
 }

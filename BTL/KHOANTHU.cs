@@ -22,6 +22,7 @@ namespace BTL
         public Nullable<int> mahocsinh { get; set; }
         public string nguoithem { get; set; }
     
+        public virtual HOCSINH HOCSINH { get; set; }
         public virtual TAIKHOAN TAIKHOAN { get; set; }
         public virtual LOAIKHOANTHU LOAIKHOANTHU1 { get; set; }
     }

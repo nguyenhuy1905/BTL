@@ -61,6 +61,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChiTietHocPhi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChiTietHocPhi.Designer.cs">
+      <DependentUpon>ChiTietHocPhi.cs</DependentUpon>
+    </Compile>
     <Compile Include="DoiMK.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -96,15 +102,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
+    <Compile Include="Model.cs" />
+    <Compile Include="Model.designer.cs">
       <DependentUpon>Model.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -136,6 +138,9 @@
     <Compile Include="TAIKHOAN.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ChiTietHocPhi.resx">
+      <DependentUpon>ChiTietHocPhi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DoiMK.resx">
       <DependentUpon>DoiMK.cs</DependentUpon>
     </EmbeddedResource>
@@ -197,7 +202,7 @@
     <Content Include="Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
-      <LastGenOutput>Model.cs</LastGenOutput>
+      <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
