@@ -19,6 +19,8 @@ namespace BTL
             InitializeComponent();
             this.Text = "Xin Chào " + LoginInfo.UserID;
             controls.Add(doiMK1);
+            if(!LoginInfo.UserID.StartsWith("admin"))
+                quảnLýTàiKhoảnToolStripMenuItem.Visible = false;
             //controls.Add(quanLyLopHoc1);
             //controls.Add(quanLyHocSinh1);
         }
@@ -53,7 +55,11 @@ namespace BTL
 
         private void QuảnLýKhoảnThuToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            using (var db = new QLTHUCHIEntities())
+            {
+                MessageBox.Show(String.Format("Tổng khoản thu của bạn là {0: 0,0} VND",
+                    db.KHOANTHUs.Sum(kt => kt.sotien).ToString().Split('.')[0]));
+            }
         }
 
         private void ĐăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
@@ -95,6 +101,14 @@ namespace BTL
             Text = "Quản lý học sinh";
             //Change(2);
             var frm = new QuanLyHocSinh();
+            frm.ShowDialog();
+        }
+
+        private void QuảnLýTàiKhoảnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Text = "Quản lý tài khoản";
+            //Change(2);
+            var frm = new QuanLyTaiKhoan();
             frm.ShowDialog();
         }
     }
