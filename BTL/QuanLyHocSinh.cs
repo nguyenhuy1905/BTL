@@ -20,6 +20,7 @@ namespace BTL
                 cbxLop.DisplayMember = "Text";
                 cbxLop.ValueMember = "Value";
                 var li = db.LOPs.ToList();
+                cbxLop.DataSource = li;
                 li.ForEach(l =>
                 {
                     cbxLop.Items.Add(new {
