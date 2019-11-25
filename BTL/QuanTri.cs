@@ -111,5 +111,13 @@ namespace BTL
             var frm = new QuanLyTaiKhoan();
             frm.ShowDialog();
         }
+
+        private void quảnLýKhoảnChiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Text = "Quản lý chi";
+            //Change(2);
+            var frm = new QuanLyChi();
+            frm.ShowDialog();
+        }
     }
 }

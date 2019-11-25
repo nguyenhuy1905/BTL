@@ -16,7 +16,7 @@ namespace BTL
     public partial class QLTHUCHIEntities : DbContext
     {
         public QLTHUCHIEntities()
-            : base("name=QLTHUCHIEntities")
+            : base("name=Entities")
         {
         }
     
