@@ -40,6 +40,7 @@
             this.quảnLýLớpHọcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quảnLýHọcSinhToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.doiMK1 = new BTL.DoiMK();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -108,7 +109,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1011, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(798, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -137,18 +138,33 @@
             // 
             // doiMK1
             // 
-            this.doiMK1.Location = new System.Drawing.Point(288, 112);
+            this.doiMK1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.doiMK1.Location = new System.Drawing.Point(256, 108);
             this.doiMK1.Margin = new System.Windows.Forms.Padding(5);
             this.doiMK1.Name = "doiMK1";
             this.doiMK1.Size = new System.Drawing.Size(312, 240);
             this.doiMK1.TabIndex = 1;
             this.doiMK1.Visible = false;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Font = new System.Drawing.Font("Monotype Corsiva", 25.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.Location = new System.Drawing.Point(147, 51);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(475, 53);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Phầm mềm quản lý thu chi";
+            // 
             // QuanTri
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1011, 554);
+            this.BackgroundImage = global::BTL.Properties.Resources.nền_btl;
+            this.ClientSize = new System.Drawing.Size(798, 449);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.doiMK1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -178,5 +194,6 @@
         private System.Windows.Forms.ToolStripMenuItem quảnLýLớpHọcToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem quảnLýHọcSinhToolStripMenuItem;
         private DoiMK doiMK1;
+        private System.Windows.Forms.Label label1;
     }
 }

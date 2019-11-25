@@ -23,6 +23,7 @@ namespace BTL
                 quảnLýTàiKhoảnToolStripMenuItem.Visible = false;
             //controls.Add(quanLyLopHoc1);
             //controls.Add(quanLyHocSinh1);
+            label1.BackColor = Color.FromArgb(0);
         }
 
         private void Change(int n)
